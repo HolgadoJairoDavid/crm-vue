@@ -1,12 +1,16 @@
 <script setup>
 import ClienteService from "../services/ClienteService";
+import { onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import RouterLink from "../components/UI/RouterLink.vue";
 import Heading from "../components/UI/Heading.vue";
 import { FormKit } from "@formkit/vue";
+import { reactive } from "vue";
 
 const route = useRoute();
 const router = useRouter();
+const { id } = route.params;
+const formData = reactive({});
 defineProps({
   titulo: {
     type: String,
@@ -14,13 +18,16 @@ defineProps({
   },
 });
 
-const handleSubmit = (data) => {
-  data.estado = 1;
-  ClienteService.agregarCliente(data)
-    .then((response) => {
-      console.log(response);
-      router.push({ name: "inicio" });
+onMounted(() => {
+  ClienteService.obtenerCliente(id)
+    .then(({ data }) => {
+      Object.assign(formData, data);
     })
+    .catch((error) => console.log(error));
+});
+const handleSubmit = (data) => {
+  ClienteService.actualizarCliente(id, data)
+    .then(() => router.push({ name: "inicio" }))
     .catch((error) => console.log(error));
 };
 </script>
@@ -33,7 +40,7 @@ const handleSubmit = (data) => {
     <div class="mx-auto md:w-2/3 py-20 px-6">
       <FormKit
         type="form"
-        submit-label="Agregar Cliente"
+        submit-label="Guardar Cambios"
         incomplete-message="No se pudo enviar, Asegúrate de que no quede ningún mensaje en rojo"
         @submit="handleSubmit"
       >
@@ -47,6 +54,7 @@ const handleSubmit = (data) => {
             required: 'El nombre del cliente es obligatorio',
           }"
           validation-visibility="live"
+          v-model="formData.nombre"
         />
 
         <FormKit
@@ -59,6 +67,7 @@ const handleSubmit = (data) => {
             required: 'El apellido del cliente es obligatorio',
           }"
           validation-visibility="live"
+          v-model="formData.apellido"
         />
 
         <FormKit
@@ -72,6 +81,7 @@ const handleSubmit = (data) => {
             email: 'Coloca un email válido',
           }"
           validation-visibility="live"
+          v-model="formData.email"
         />
 
         <FormKit
@@ -84,6 +94,7 @@ const handleSubmit = (data) => {
             matches: 'EL formato no es válido',
           }"
           validation-visibility="live"
+          v-model="formData.telefono"
         />
 
         <FormKit
@@ -91,6 +102,7 @@ const handleSubmit = (data) => {
           name="empresa"
           label="Empresa"
           placeholder="Empresa del cliente"
+          v-model="formData.empresa"
         />
 
         <FormKit
@@ -98,6 +110,7 @@ const handleSubmit = (data) => {
           name="puesto"
           label="Puesto"
           placeholder="Puesto del cliente"
+          v-model="formData.puesto"
         />
       </FormKit>
     </div>

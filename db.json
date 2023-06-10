@@ -1,3 +1,40 @@
 {
- "clientes":[]
+  "clientes": [
+    {
+      "nombre": "JAIRO",
+      "apellido": "HOLGADO",
+      "email": "jairodavidholgado@gmail.com",
+      "telefono": "03644368664",
+      "empresa": "Henry",
+      "puesto": "Estudiante",
+      "id": 1
+    },
+    {
+      "nombre": "JAIRO",
+      "apellido": "HOLGADO",
+      "email": "jairodavidholgado@gmail.com",
+      "telefono": "364-436-8664",
+      "empresa": "Henry",
+      "puesto": "Estudiante",
+      "id": 2
+    },
+    {
+      "nombre": "MARTIN",
+      "apellido": "ALTURRIA",
+      "email": "martinalturria@gmail.com",
+      "telefono": "364-436-8664",
+      "empresa": "Henry",
+      "puesto": "Pasante",
+      "id": 3
+    },
+    {
+      "nombre": "JONATHAN",
+      "apellido": "HOLGADO",
+      "email": "jonathanholgado@gmail.com",
+      "telefono": "364-472-6123",
+      "empresa": "San José",
+      "puesto": "Estudiante",
+      "id": 4
+    }
+  ]
 }
